@@ -8,13 +8,17 @@ function TransformNotifyOptions(options: any){
         options['text'] = (options['text'] || options['message']);
         options['toast'] = (!!options['toast'] || !!options['asToast']);
         options['position'] = (options['position'] || (options['toast'] ? 'top-end' : 'center'));
-        options['timer'] = (options['timer'] ||((typeof options['duration'] === 'number') ?  options['duration'] : ((options['duration'] === false) ? undefined : 5000)));
+        options['timer'] = (options['timer'] || ((typeof options['duration'] === 'number') ?  options['duration'] : ((options['duration'] === false) ? undefined : 5000)));
+
+        ['error', 'type', 'code', 'success', 'message', 'asToast', 'duration'].forEach((key) => {
+            delete options[key];
+        });
     }
     else{
         options = {
             icon: 'info',
             title: 'Information',
-            text: options,
+            text: ((typeof options === 'string') ? options : 'Sample notification'),
             position: 'center',
         };
     }
@@ -30,13 +34,15 @@ function TransformConfirmOptions(options: any){
         options['confirmButtonText'] = (options['confirmButtonText'] || 'Yes, continue');
         options['position'] = (options['position'] || 'center');
         options['toast'] = false;
-        options['timer'] = undefined;
+
+        delete options['timer'];
+        delete options['message'];
     }
     else{
         options = {
             icon: 'warning',
             title: 'Please confirm your action',
-            text: options,
+            text: ((typeof options === 'string') ? options : 'Are you sure you want to continue?'),
             confirmButtonText: 'Yes, continue',
             position: 'center',
         };
@@ -54,13 +60,17 @@ function TransformPromptOptions(options: any){
         options['position'] = (options['position'] || 'center');
         options['input'] = (options['input'] || options['type'] || 'text');
         options['toast'] = false;
-        options['timer'] = undefined;
+
+        delete options['timer'];
+        ['message', 'type'].forEach((key) => {
+            delete options[key];
+        });
     }
     else{
         options = {
             icon: 'info',
             title: 'Please enter details below',
-            text: options,
+            text: ((typeof options === 'string') ? options : 'Use the input field below to enter details'),
             confirmButtonText: 'Submit',
             position: 'center',
             input: 'text',
