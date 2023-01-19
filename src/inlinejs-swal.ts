@@ -1,8 +1,3 @@
-import { GetGlobal, WaitForGlobal } from '@benbraide/inlinejs';
+import { InlineJSSwal } from './entry';
 
-import { SwalAlert } from './swal';
-
-WaitForGlobal().then(() => {
-    GetGlobal().GetConcept<any>('alert')?.SetName('swal');
-    GetGlobal().SetConcept('swal', new SwalAlert);
-});
+InlineJSSwal();
